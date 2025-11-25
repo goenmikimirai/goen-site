@@ -1,34 +1,5 @@
-"use client";
-
-import { useEffect } from "react";
-
-function TwitterFeed() {
-  useEffect(() => {
-    const script = document.createElement("script");
-    script.src = "https://platform.twitter.com/widgets.js";
-    script.async = true;
-    document.body.appendChild(script);
-  }, []);
-
-  return (
-    <section className="mx-auto max-w-4xl px-4 py-12">
-      <h2 className="mb-6 text-center text-xl font-semibold tracking-wide text-neutral-700">
-        今日のごえん
-      </h2>
-      <div className="overflow-hidden rounded-2xl bg-white shadow-sm">
-        <a
-          className="twitter-timeline"
-          data-chrome="noheader nofooter noborders transparent"
-          data-theme="light"
-          data-tweet-limit="3"
-          href="https://twitter.com/wiliwili328543"
-        >
-          Tweets by ごえん
-        </a>
-      </div>
-    </section>
-  );
-}
+// app/page.tsx
+import TodaySection from "./components/TodaySection";
 
 export default function HomePage() {
   return (
@@ -76,6 +47,7 @@ export default function HomePage() {
         <p className="mb-6 text-sm text-neutral-600">
           カウンターの空気感や、料理の表情が少しでも伝わればうれしく思います。
         </p>
+
         <div className="grid gap-6 md:grid-cols-3">
           <div className="aspect-[4/3] overflow-hidden rounded-2xl bg-neutral-200 shadow">
             <img
@@ -84,6 +56,7 @@ export default function HomePage() {
               className="h-full w-full object-cover"
             />
           </div>
+
           <div className="aspect-[4/3] overflow-hidden rounded-2xl bg-neutral-200 shadow">
             <img
               src="/hero-sashimi.jpg"
@@ -91,6 +64,7 @@ export default function HomePage() {
               className="h-full w-full object-cover"
             />
           </div>
+
           <div className="aspect-[4/3] overflow-hidden rounded-2xl bg-neutral-200 shadow">
             <img
               src="/hero-tempura.jpg"
@@ -101,7 +75,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Online Shop セクション：画像＋説明＋ボタンを1カードに集約 */}
+      {/* おうちでごえん（オンラインショップ） */}
       <section className="mx-auto max-w-6xl px-4 py-16">
         <div className="mx-auto max-w-4xl rounded-3xl bg-white/80 p-6 shadow-sm md:flex md:items-center md:gap-8">
           {/* 写真 */}
@@ -123,7 +97,6 @@ export default function HomePage() {
             <p className="mt-3 text-sm leading-relaxed text-neutral-700">
               季節の味を詰め込んだ八寸や、冷凍惣菜・調味料・酒の肴など、
               ご自宅でも “ごえん” の余韻を楽しんでいただけるように少しずつ整えています。
-              今はまだ準備中ですが、ラインナップが整い次第こちらからご案内いたします。
             </p>
             <div className="mt-5 flex flex-wrap items-center gap-3">
               <a
@@ -143,35 +116,65 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Twitter feed */}
-      <TwitterFeed />
+      {/* 今日のごえん（カード表示） */}
+      <TodaySection />
 
-      {/* Access セクション：地図を1/4サイズ相当で中央寄せ */}
-      <section className="bg-neutral-50">
-        <div className="mx-auto max-w-6xl px-4 py-16">
-          <h2 className="text-2xl font-bold md:text-3xl">アクセス</h2>
+{/* Access セクション：住所＋地図 ＋ 連絡先・営業時間 */}
+<section className="bg-neutral-50">
+  <div className="mx-auto max-w-6xl px-4 py-16">
+    <h2 className="text-2xl font-bold md:text-3xl">アクセス</h2>
 
-          <p className="mt-4 leading-relaxed text-neutral-700">
-            〒561-0859 大阪府豊中市服部豊町1-6-16-108
-            <br />
-            （心響彩酒 ごえん / 株式会社未来未来 本店）
-            <br />
-            阪急宝塚線「服部天神」駅より徒歩数分。
-          </p>
+    {/* 上段：住所＋地図を横並び */}
+    <div className="mt-6 flex flex-col md:flex-row md:items-start md:gap-10">
+      {/* 左：住所テキスト */}
+      <div className="flex-1 text-neutral-700 leading-relaxed text-[15px]">
+        <p>
+          〒561-0859 大阪府豊中市服部豊町1-6-16-108<br />
+          （心響彩酒 ごえん / 株式会社未来未来 本店）<br />
+          阪急宝塚線「服部天神」駅より徒歩数分。
+        </p>
+      </div>
 
-          <div className="mt-6 flex justify-center">
-            <div className="w-full md:w-1/4 aspect-[4/3] overflow-hidden rounded-2xl border bg-neutral-100">
-              <iframe
-                src="https://www.google.com/maps?q=〒561-0859+大阪府豊中市服部豊町1-6-16-108&output=embed"
-                style={{ border: 0 }}
-                className="h-full w-full"
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              />
-            </div>
-          </div>
+      {/* 右：地図 */}
+      <div className="flex justify-center md:justify-end flex-1 mt-6 md:mt-0">
+        <div className="w-[260px] h-[200px] md:w-[320px] md:h-[240px] overflow-hidden rounded-2xl border bg-neutral-100 shadow">
+          <iframe
+            src="https://www.google.com/maps?q=〒561-0859+大阪府豊中市服部豊町1-6-16-108&output=embed"
+            className="w-full h-full"
+            loading="lazy"
+          />
         </div>
-      </section>
+      </div>
     </div>
+
+    {/* 下段：連絡先＋営業時間 */}
+    <div className="mt-10 grid gap-8 md:grid-cols-2 text-[14px] md:text-[15px] text-neutral-700 leading-relaxed">
+      {/* 連絡先 */}
+      <div>
+        <h3 className="text-lg font-semibold text-neutral-900 mb-2">連絡先</h3>
+        <p>電話： 06-6167-9453</p>
+        <p className="mt-1">メール： goen@mikimirai.jp</p>
+        <p className="mt-3 text-[13px] text-neutral-500">
+          ※ ご予約は「ご予約フォーム」からお送りいただくか、
+          お電話にてお願いいたします。
+        </p>
+      </div>
+
+      {/* 営業時間 */}
+      <div>
+        <h3 className="text-lg font-semibold text-neutral-900 mb-2">営業時間</h3>
+        <p>火〜土：18:00 〜 1:00</p>
+        <p>日・祝：17:00 〜 23:00</p>
+        <p className="mt-1">定休日：月曜日</p>
+        <p className="mt-3 text-[13px] text-neutral-500">
+          ※ 営業時間・定休日は、都合により変更となる場合があります。
+          最新情報は X（旧Twitter）などもあわせてご確認ください。
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div>
   );
 }
